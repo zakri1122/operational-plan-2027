@@ -1,36 +1,5 @@
-const summary = {
-  title: 'الخطة التشغيلية 2027',
-  subtitle: 'خطة تنفيذية استراتيجية للتنمية التشغيلية والمحورية',
-  score: '92%',
-  status: 'على المسار الصحيح',
-};
-
-const kpis = [
-  { label: 'الأهداف المنجزة', value: '18/20', tone: 'green' },
-  { label: 'التنفيذ الشهري', value: '76%', tone: 'blue' },
-  { label: 'معدل رضا الفرق', value: '4.8/5', tone: 'gold' },
-  { label: 'الاستثمار المخصص', value: '8.4M', tone: 'purple' },
-];
-
-const initiatives = [
-  { name: 'تحسين تجربة المرضى', progress: 84, owner: 'إدارة الخدمات', deadline: '2027-02-15' },
-  { name: 'رفع كفاءة الأمان والامتثال', progress: 72, owner: 'الشؤون التنظيمية', deadline: '2027-03-20' },
-  { name: 'التحول الرقمي للعمليات', progress: 91, owner: 'الدعم التقني', deadline: '2027-04-10' },
-  { name: 'تطوير الكوادر البشرية', progress: 67, owner: 'إدارة الموارد البشرية', deadline: '2027-05-05' },
-];
-
-const timeline = [
-  'ربع أول: إطلاق الخطة التشغيلية وتحديد أولويات التنفيذ',
-  'ربع ثاني: تنفيد المشاريع الاستراتيجية والبدء بالقياس',
-  'ربع ثالث: تحسين الأداء ومراجعة التحديات التشغيلية',
-  'ربع رابع: تقييم النتائج وفتح دورة تحسين جديدة',
-];
-
-const risks = [
-  'محدودية الموارد البشرية في بعض الأقسام',
-  'تأخر تنفيذ بعض المشاريع التقنية بسبب الاعتماد الخارجي',
-  'تفاوت في سرعة اعتماد الفرق على النظام الجديد',
-];
+import React from 'react';
+import { summary, kpis, priorities, quarterlyPlan, risks, actionCenter, milestones } from './data';
 
 export default function App() {
   return (
@@ -40,9 +9,13 @@ export default function App() {
           <p className="eyebrow">لوحة القيادة</p>
           <h1>{summary.title}</h1>
         </div>
-        <div className="status-pill">
-          <span className="status-dot" />
-          {summary.status}
+
+        <div className="topbar-meta">
+          <span className="badge">{summary.period}</span>
+          <div className="status-pill">
+            <span className="status-dot" />
+            {summary.status}
+          </div>
         </div>
       </header>
 
@@ -50,7 +23,9 @@ export default function App() {
         <div>
           <p className="muted">{summary.subtitle}</p>
           <h2>مؤشرات الأداء الرئيسية</h2>
+          <small>{summary.owner}</small>
         </div>
+
         <div className="score-box">
           <strong>{summary.score}</strong>
           <span>التقدم العام</span>
@@ -74,19 +49,27 @@ export default function App() {
           </div>
 
           <div className="initiative-list">
-            {initiatives.map((initiative) => (
+            {priorities.map((initiative) => (
               <div key={initiative.name} className="initiative-item">
                 <div className="initiative-head">
                   <h4>{initiative.name}</h4>
                   <span>{initiative.owner}</span>
                 </div>
+
+                <div className="target-row">
+                  <span>{initiative.target}</span>
+                </div>
+
                 <div className="progress-row">
                   <div className="progress-bar">
                     <span style={{ width: `${initiative.progress}%` }} />
                   </div>
                   <strong>{initiative.progress}%</strong>
                 </div>
-                <small>آخر موعد: {initiative.deadline}</small>
+
+                <div className="initiative-footer">
+                  <small>آخر موعد: {initiative.deadline}</small>
+                </div>
               </div>
             ))}
           </div>
@@ -98,7 +81,7 @@ export default function App() {
               <h3>الجدول الزمني</h3>
             </div>
             <ul className="timeline">
-              {timeline.map((item) => (
+              {quarterlyPlan.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
@@ -115,6 +98,42 @@ export default function App() {
             </ul>
           </div>
         </aside>
+      </section>
+
+      <section className="bottom-grid">
+        <div className="panel">
+          <div className="panel-header">
+            <h3>مركز الإجراءات</h3>
+          </div>
+
+          <div className="action-grid">
+            {actionCenter.map((item) => (
+              <div key={item.label} className={`action-item ${item.tone}`}>
+                <span>{item.label}</span>
+                <strong>{item.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="panel">
+          <div className="panel-header">
+            <h3>المراحل المهمة</h3>
+          </div>
+
+          <div className="milestones">
+            {milestones.map((item) => (
+              <div key={item.title} className="milestone-item">
+                <div className="milestone-dot" />
+                <div>
+                  <strong>{item.title}</strong>
+                  <small>{item.date}</small>
+                </div>
+                <span className="milestone-status">{item.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
     </div>
   );
