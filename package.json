@@ -1,0 +1,47 @@
+{
+  "name": "operational-plan-2027",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4173",
+    "start": "vite --host 0.0.0.0 --port 3000",
+    "electron": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "build:desktop": "electron-builder --win --mac"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^9.0.1",
+    "electron": "^31.0.2",
+    "electron-builder": "^24.13.0",
+    "vite": "^5.4.10",
+    "wait-on": "^8.1.0"
+  },
+  "build": {
+    "appId": "com.rouh.operational-plan-2027",
+    "productName": "Operational Plan 2027",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}-Setup-${version}.exe"
+    },
+    "mac": {
+      "target": "dmg",
+      "artifactName": "${productName}-${version}.dmg"
+    }
+  }
+}
